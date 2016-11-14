@@ -11,6 +11,7 @@ var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var unirest = require('unirest');
+var schedule = require('node-schedule');
 const mtg = require('mtgsdk');
 
 
@@ -53,7 +54,6 @@ var strategy = new BasicStrategy(function(username, password, callback) {
 passport.use(strategy);
 app.use(passport.initialize());
 
-// var tempCardCache = db.collection('tempCardCache');
 
 //Adding new users
 app.post('/users', jsonParser, function(req, res) {
@@ -201,6 +201,12 @@ app.get('/cards/', jsonParser, function(req, res) {
         (types == undefined?{}:{types}),
         (subtypes == undefined?{}:{subtypes})
         );
+    // Cache.find({
+    //     filters
+    // });
+    // if(!(card in Cache)) {
+        
+    // }
     mtg.card.all(filters)
         .on('data', card => {
             //include set filter
@@ -209,6 +215,20 @@ app.get('/cards/', jsonParser, function(req, res) {
     });
     //Cache cards
     app.post('/cards/', jsonParser, function(req, res) {
+        if (!req.body) {
+            return res.status(400).json({
+                message: "No request body"
+            });
+        }
+        
+        if(!('card' in req.body)) {
+            return res.status(422).json({
+                message: "Missing field: card"
+            });
+        }
+        
+        
+        
         var card = req.body.card;
         var cache = new Cache({
             card: card,
@@ -222,11 +242,17 @@ app.get('/cards/', jsonParser, function(req, res) {
                 });
             }
             
-            return res.status(201).json({});
+            return res.status(201).json({
+                message: 'Cached cards'
+            });
         });
     });
 });
 
+// //Check cache
+// app.get('/cards/cache', function(req, res) {
+//     Cache.find({type: req.query.type});
+// });
 
 //Make deck
 app.post('/user/deck', jsonParser, function(req, res) {
@@ -248,7 +274,9 @@ app.post('/user/deck', jsonParser, function(req, res) {
             	});
         	}
 
-        	return res.status(201).json({});
+        	return res.status(201).json({
+        	    message: 'Deck created'
+        	});
     });
 });
 
@@ -283,13 +311,20 @@ app.put('/user/deck/:deckName', function(req, res) {
 //Delete deck
 app.delete('/user/deck/:deckName', function(req, res) {
     var deckName = req.params.deckName;
+    if (!(deckName in Deck)) {
+        return res.status(404).json({
+            message: 'Deck not found'
+        });
+    }
     Deck.findOneAndRemove({name: deckName}, function(err, deck) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal server error'
             });
         }
-        
+        return res.status(200).json({
+            message: 'Deck deleted'
+        });
     });
 });
 
@@ -298,4 +333,9 @@ app.delete('/user/deck/:deckName', function(req, res) {
 mongoose.connect('mongodb://localhost/mtg').then(function() {
     app.use(express.static('public'));
     app.listen(process.env.PORT || 8080);
+    
+    var j = schedule.scheduleJob('* 1 * * *', function(){
+        var current = moment();
+        
+    });
 });
