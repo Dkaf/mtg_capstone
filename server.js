@@ -62,7 +62,7 @@ app.post('/users', jsonParser, function(req, res) {
             message: "No request body"
         });
     }
-    
+
     //Validating username
     if (!('username' in req.body)) {
         return res.status(422).json({
@@ -108,7 +108,7 @@ app.post('/users', jsonParser, function(req, res) {
             message: 'Incorrect field length: password'
         });
     }
-    
+
     //Hashing password
 	bcrypt.genSalt(10, function(err, salt) {
         if (err) {
@@ -126,7 +126,7 @@ app.post('/users', jsonParser, function(req, res) {
 
             var user = new User({
                 username: username,
-                password: hash 
+                password: hash
             });
 
 
@@ -146,21 +146,21 @@ app.post('/users', jsonParser, function(req, res) {
 //Find users
 app.get('/users', jsonParser, function(req, res) {
     User.find({
-        
+
     });
 });
 
 //Edit users
 app.put('/user/edit', function(req, res) {
     User.findOneAndUpdate({
-        
+
     });
 });
 
 //Delete users
 app.delete('/user/delete', function(req, res) {
     User.findOneAndRemove({
-        
+
     });
 });
 
@@ -205,7 +205,7 @@ app.get('/cards/', jsonParser, function(req, res) {
     //     filters
     // });
     // if(!(card in Cache)) {
-        
+
     // }
     mtg.card.all(filters)
         .on('data', card => {
@@ -220,28 +220,28 @@ app.get('/cards/', jsonParser, function(req, res) {
                 message: "No request body"
             });
         }
-        
+
         if(!('card' in req.body)) {
             return res.status(422).json({
                 message: "Missing field: card"
             });
         }
-        
-        
-        
+
+
+
         var card = req.body.card;
         var cache = new Cache({
             card: card,
             date: moment()
         });
-        
+
         cache.save(function(err) {
             if (err) {
                 return res.status(500).json({
                     message: 'Internal server error'
                 });
             }
-            
+
             return res.status(201).json({
                 message: 'Cached cards'
             });
@@ -258,15 +258,15 @@ app.get('/cards/', jsonParser, function(req, res) {
 app.post('/user/deck', jsonParser, function(req, res) {
     var name = req.body.name;
     name = name.trim();
-    
+
     var format = req.body.format;
     format = format.trim();
-    
+
     var deck = new Deck({
         name: name,
         format: format
     });
-    
+
  	deck.save(function(err) {
         	if (err) {
             	return res.status(500).json({
@@ -330,12 +330,12 @@ app.delete('/user/deck/:deckName', function(req, res) {
 
 //req.query.:param
 
-mongoose.connect('mongodb://localhost/mtg').then(function() {
+mongoose.connect(MONGODB_URI).then(function() {
     app.use(express.static('public'));
     app.listen(process.env.PORT || 8080);
-    
+
     var j = schedule.scheduleJob('* 1 * * *', function(){
         var current = moment();
-        
+
     });
 });
