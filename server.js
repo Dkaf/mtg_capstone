@@ -330,7 +330,7 @@ app.delete('/user/deck/:deckName', function(req, res) {
 
 //req.query.:param
 
-mongoose.connect(MONGODB_URI).then(function() {
+mongoose.connect(process.env.MONGODB_URI).then(function() {
     app.use(express.static('public'));
     app.listen(process.env.PORT || 8080);
 
