@@ -249,10 +249,6 @@ app.get('/cards/', jsonParser, function(req, res) {
     });
 });
 
-// //Check cache
-// app.get('/cards/cache', function(req, res) {
-//     Cache.find({type: req.query.type});
-// });
 
 //Make deck
 app.post('/user/deck', jsonParser, function(req, res) {
