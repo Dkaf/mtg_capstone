@@ -9,50 +9,36 @@ var Deck = require('./models/deck_model');
 var Cache = require('./models/cache_model');
 var bcrypt = require('bcryptjs');
 var passport = require('passport');
+var Auth0Strategy = require('passport-auth0');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var unirest = require('unirest');
 var schedule = require('node-schedule');
+const cors = require('cors')
 const mtg = require('mtgsdk');
 
 
 
 var app = express();
-
+app.use(cors());
 var jsonParser = bodyParser.json();
 
 //Setting up passport strategy
-var strategy = new BasicStrategy(function(username, password, callback) {
-    User.findOne({
-        username: username
-    }, function (err, user) {
-        if (err) {
-            callback(err);
-            return;
-        }
-
-        if (!user) {
-            return callback(null, false, {
-                message: 'Incorrect username.'
-            });
-        }
-
-        user.validatePassword(password, function(err, isValid) {
-            if (err) {
-                return callback(err);
-            }
-
-            if (!isValid) {
-                return callback(null, false, {
-                    message: 'Incorrect password.'
-                });
-            }
-            return callback(null, user);
-        });
-    });
-});
+var strategy = new Auth0Strategy({
+    domain:       process.env.AUTH0_DOMAIN,
+    clientID:     process.env.AUTH0_CLIENT_ID,
+    clientSecret: process.env.AUTH0_CLIENT_SECRET,
+    callbackURL:  process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/callback'
+  }, function(accessToken, refreshToken, extraParams, profile, done) {
+    // accessToken is the token to call Auth0 API (not needed in the most cases)
+    // extraParams.id_token has the JSON Web Token
+    // profile has all the information from the user
+    return done(null, profile);
+  });
 
 passport.use(strategy);
 app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 //Adding new users
