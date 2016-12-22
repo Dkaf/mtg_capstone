@@ -196,8 +196,9 @@ app.get('/cards/', jsonParser, function(req, res) {
     mtg.card.all(filters)
         .on('data', card => {
             //include set filter
-        res.json(card)
+    		res.json(card)
     });
+});
     //Cache cards
     app.post('/cards/', jsonParser, function(req, res) {
         if (!req.body) {
@@ -257,6 +258,7 @@ app.post('/user/deck', jsonParser, function(req, res) {
 
         	return res.status(201).json({
         	    message: 'Deck created'
+				res.json(deck);
         	});
     });
 });
