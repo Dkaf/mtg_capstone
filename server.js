@@ -314,8 +314,8 @@ mongoose.connect(process.env.MONGODB_URI).then(function() {
     app.use(express.static('public'));
     app.listen(process.env.PORT || 8080);
 
-    var j = schedule.scheduleJob('* 1 * * *', function(){
-        var current = moment();
-
-    });
+    // var j = schedule.scheduleJob('* 1 * * *', function(){
+    //     var current = moment();
+	//
+    // });
 });
