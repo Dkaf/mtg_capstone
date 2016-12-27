@@ -257,8 +257,8 @@ app.post('/user/deck', jsonParser, function(req, res) {
         	}
 
         	return res.status(201).json({
-        	    message: 'Deck created'
-				res.json(deck);
+        	    message: 'Deck created',
+				deck: deck
         	});
     });
 });
