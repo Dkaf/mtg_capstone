@@ -289,8 +289,6 @@ app.put('/user/deck/:deckName', function(req, res) {
     });
 });
 
-//Remove cards from deck
-
 //Delete deck
 app.delete('/user/deck/:deckName', function(req, res) {
     var deckName = req.params.deckName;
@@ -311,7 +309,6 @@ app.delete('/user/deck/:deckName', function(req, res) {
     });
 });
 
-//req.query.:param
 
 mongoose.connect(process.env.MONGODB_URI).then(function() {
     app.use(express.static('public'));
