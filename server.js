@@ -233,7 +233,7 @@ app.get('/cards/', jsonParser, function(req, res) {
             });
         });
     });
-});
+
 
 
 //Make deck
