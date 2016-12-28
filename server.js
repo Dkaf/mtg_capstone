@@ -196,7 +196,7 @@ app.get('/cards/', jsonParser, function(req, res) {
     mtg.card.all(filters)
         .on('data', card => {
             //include set filter
-    		console.log(card)
+    		res.json(card)
     });
 });
     //Cache cards
