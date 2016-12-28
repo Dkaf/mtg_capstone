@@ -194,7 +194,7 @@ app.get('/cards/', jsonParser, function(req, res) {
 
     // }
     mtg.card.where(filters)
-        .then('data', card => {
+        .then(cards => {
             //include set filter
     		res.json(card)
     });
