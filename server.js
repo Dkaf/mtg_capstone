@@ -193,7 +193,7 @@ app.get('/cards/', jsonParser, function(req, res) {
     // if(!(card in Cache)) {
 
     // }
-    mtg.card.all(filters)
+    mtg.card.where(filters)
         .on('data', card => {
             //include set filter
     		res.json(card)
