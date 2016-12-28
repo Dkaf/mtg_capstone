@@ -196,7 +196,7 @@ app.get('/cards/', jsonParser, function(req, res) {
     mtg.card.where(filters)
         .then(cards => {
             //include set filter
-    		res.json(card)
+    		res.json(cards)
     });
 });
     //Cache cards
