@@ -263,6 +263,20 @@ app.post('/user/deck', jsonParser, function(req, res) {
     });
 });
 
+//Get Decks for deckList
+app.get('/decks/', function(req, res) {
+	Deck.find(function(err, decks) {
+		if (err) {
+			return res.status(500).json({
+				message: 'Internal server error'
+			});
+		}
+		return res.status(201).json({
+			decks: decks
+		});
+	});
+});
+
 //Find deck
 app.get('/deck/:deckSearch' ,function(req, res) {
     var deckSearch = req.params.deckSearch;
