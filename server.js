@@ -306,11 +306,11 @@ app.put('/user/deck/:deckName', function(req, res) {
 //Delete deck
 app.delete('/user/deck/:deckName', function(req, res) {
     var deckName = req.params.deckName;
-    if (!(deckName in Deck)) {
-        return res.status(404).json({
-            message: 'Deck not found'
-        });
-    }
+    // if (!(deckName in Deck)) {
+    //     return res.status(404).json({
+    //         message: 'Deck not found'
+    //     });
+    // }
     Deck.findOneAndRemove({name: deckName}, function(err, deck) {
         if (err) {
             return res.status(500).json({
