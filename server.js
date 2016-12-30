@@ -20,7 +20,6 @@ const mtg = require('mtgsdk');
 
 var app = express();
 app.options('*', cors());
-app.use(cors());
 var jsonParser = bodyParser.json();
 
 //Setting up passport strategy
