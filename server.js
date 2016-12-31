@@ -293,7 +293,7 @@ app.get('/deck/:deckSearch' ,function(req, res) {
 
 
 //Add cards to deck
-app.put('/user/deck/:deckName', function(req, res) {
+app.put('/user/deck/:deckName', jsonParser, function(req, res) {
     var deckName = req.params.deckName;
     Deck.findOneAndUpdate({name: deckName, cards: req.body.cards}, function(err, deck) {
         if (err) {
