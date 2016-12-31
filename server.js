@@ -20,12 +20,12 @@ const mtg = require('mtgsdk');
 
 var app = express();
 app.options('*', cors({
-	origin: "*",
+	origin: "http://localhost:8080",
 	methods:['POST','GET','PUT','DELETE'],
 	preflightContinue: true
 }));
 app.use(cors({
-	origin: "*",
+	origin: "http://localhost:8080",
 	methods:['POST','GET','PUT','DELETE'],
 	preflightContinue: true
 }));
