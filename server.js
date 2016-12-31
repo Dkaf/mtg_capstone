@@ -19,7 +19,10 @@ const mtg = require('mtgsdk');
 
 
 var app = express();
-app.options('*', cors());
+app.options('*', cors({
+	origin: true,
+	methods:['POST','GET','PUT','DELETE']
+}));
 app.use(cors());
 var jsonParser = bodyParser.json();
 
