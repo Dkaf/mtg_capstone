@@ -9,7 +9,6 @@ var Deck = require('./models/deck_model');
 var Cache = require('./models/cache_model');
 var bcrypt = require('bcryptjs');
 var passport = require('passport');
-var Auth0Strategy = require('passport-auth0');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var unirest = require('unirest');
 var schedule = require('node-schedule');
@@ -191,7 +190,7 @@ app.get('/cards/:id', jsonParser, function(req, res) {
 
 
 //Get cards with filters
-app.get(passport.authenticate('basic'), '/cards/', jsonParser, function(req, res) {
+app.get('/cards/', passport.authenticate('basic'), jsonParser, function(req, res) {
     let name = req.query.name;
     let manaCost = req.query.manaCost;
     let cmc = req.query.cmc;
