@@ -12,7 +12,11 @@ var deckSchema = new mongoose.Schema({
 	},
 	cards: [{
 		type: Schema.Types.ObjectId, ref: 'Card'
-	}]
+	}],
+	user: {
+		type: String,
+		required: true
+	}
 });
 
 var Deck = mongoose.model('Deck', deckSchema);
