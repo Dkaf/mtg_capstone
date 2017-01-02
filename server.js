@@ -53,9 +53,9 @@ var strategy = new BasicStrategy( (username, password, callback) => {
 
 			return(null, user);
 		});
-		}
-	});
-);
+	)}
+});
+
 
 passport.use(strategy);
 app.use(passport.initialize());
