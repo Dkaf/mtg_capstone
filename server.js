@@ -53,7 +53,7 @@ var strategy = new BasicStrategy( function (username, password, callback)  {
 
 			return callback(null, user);
 		});
-	};
+	});
 });
 
 
