@@ -304,8 +304,8 @@ app.post('/user/deck', passport.authenticate('basic'), jsonParser, function(req,
 });
 
 //Get Decks for deckList
-app.get('/decks/', function(req, res) {
-	var user = req.body.user;
+app.get('/decks/:user', function(req, res) {
+	var user = req.params.user;
 	Deck.find({user: user}, function(err, decks) {
 		if (err) {
 			return res.status(500).json({
