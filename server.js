@@ -161,11 +161,11 @@ app.post('/users', jsonParser, function(req, res) {
 });
 
 //Login
-app.post('/login', passport.authenticate('basic'), {
+app.post('/login', passport.authenticate('basic', {
 	successRedirect: '/',
 	failureRedirect: '/login',
 	failureFlash: true
-});
+}));
 
 //Find users
 app.get('/users', jsonParser, function(req, res) {
