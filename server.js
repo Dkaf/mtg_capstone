@@ -55,6 +55,14 @@ var strategy = new BasicStrategy( function (username, password, callback)  {
 	});
 });
 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 
 passport.use(strategy);
 app.use(passport.initialize());
@@ -260,7 +268,7 @@ app.get('/cards/', passport.authenticate('basic'), jsonParser, function(req, res
 
 
 //Make deck
-app.post('/user/deck', jsonParser, function(req, res) {
+app.post('/user/deck', passport.authenticate('basic'), jsonParser, function(req, res) {
     var name = req.body.name;
     name = name.trim();
 
