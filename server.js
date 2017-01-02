@@ -51,7 +51,7 @@ var strategy = new BasicStrategy( (username, password, callback) => {
 				return callback(null, false)
 			}
 
-			return(null, user);
+			return callback(null, user);
 		});
 	)}
 });
