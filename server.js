@@ -305,7 +305,8 @@ app.post('/user/deck', passport.authenticate('basic'), jsonParser, function(req,
 
 //Get Decks for deckList
 app.get('/decks/', function(req, res) {
-	Deck.find(function(err, decks) {
+	var user = req.body.user;
+	Deck.find({user: user}, function(err, decks) {
 		if (err) {
 			return res.status(500).json({
 				message: 'Internal server error'
