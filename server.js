@@ -163,8 +163,7 @@ app.post('/users', jsonParser, function(req, res) {
 //Login
 app.post('/login', passport.authenticate('basic', {
 	successRedirect: '/',
-	failureRedirect: '/login',
-	failureFlash: true
+	failureRedirect: '/login'
 }));
 
 //Find users
