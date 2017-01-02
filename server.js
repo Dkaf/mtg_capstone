@@ -32,28 +32,28 @@ app.use(cors({
 var jsonParser = bodyParser.json();
 
 //Setting up passport strategy
-var strategy = new BasicStrategy( (username, password, callback) => {
+var strategy = new BasicStrategy( function (username, password, callback)  {
 	User.findOne({ username: username}, function(err, user) {
 		if (err) {
-			return callback(err)
+			return callback(err);
 		}
 
 		if (!user) {
-			return callback(null, false)
+			return callback(null, false);
 		}
 
 		user.validatePassword(password, function(err, isValid) {
 			if (err) {
-				return callback(err)
+				return callback(err);
 			}
 
 			if (!isValid) {
-				return callback(null, false)
+				return callback(null, false);
 			}
 
 			return callback(null, user);
 		});
-	)};
+	};
 });
 
 
