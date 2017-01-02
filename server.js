@@ -10,6 +10,7 @@ var Cache = require('./models/cache_model');
 var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
+var LocalStrategy = require('passport-local').Strategy
 var unirest = require('unirest');
 var schedule = require('node-schedule');
 const cors = require('cors')
@@ -31,7 +32,7 @@ app.use(cors({
 var jsonParser = bodyParser.json();
 
 //Setting up passport strategy
-var strategy = new BasicStrategy( function (username, password, callback)  {
+var strategy = new LocalStrategy( function (username, password, callback)  {
 	User.findOne({ username: username}, function(err, user) {
 		if (err) {
 			return callback(err);
@@ -161,7 +162,7 @@ app.post('/users', jsonParser, function(req, res) {
 });
 
 //Login
-app.post('/login', passport.authenticate('basic', {
+app.post('/login', passport.authenticate('local', {
 	successRedirect: '/',
 	failureRedirect: '/login'
 }));
