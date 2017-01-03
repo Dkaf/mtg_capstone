@@ -31,6 +31,8 @@ app.use(cors({
 }));
 var jsonParser = bodyParser.json();
 
+app.use(jsonParser);
+
 //Setting up passport strategy
 var strategy = new LocalStrategy( function (username, password, callback)  {
 	User.findOne({ username: username}, function(err, user) {
