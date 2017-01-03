@@ -34,7 +34,7 @@ var jsonParser = bodyParser.json();
 app.use(jsonParser);
 
 //Setting up passport strategy
-var strategy = new LocalStrategy( function (username, password, callback)  {
+var strategy = new BasicStrategy( function (username, password, callback)  {
 	User.findOne({ username: username}, function(err, user) {
 		if (err) {
 			return callback(err);
