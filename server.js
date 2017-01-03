@@ -207,7 +207,7 @@ app.get('/cards/:id', jsonParser, function(req, res) {
 
 
 //Get cards with filters
-app.get('/cards/', passport.authenticate('basic'), jsonParser, function(req, res) {
+app.get('/cards/', jsonParser, function(req, res) {
     let name = req.query.name;
     let manaCost = req.query.manaCost;
     let cmc = req.query.cmc;
