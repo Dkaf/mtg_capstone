@@ -176,7 +176,7 @@ app.get('/login/:user', Authenticate, function(req, res) {
 		return res.json(user)
 		}
 	})
-}
+});
 
 
 //Find users
