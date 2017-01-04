@@ -248,7 +248,7 @@ app.get('/cards/', function(req, res) {
     mtg.card.where(filters)
         .then(cards => {
             Promise.all(cards = cards.map( (c) => {
-				new Promise(resolve, rej) => {
+				new Promise((resolve, rej) => {
 				c.set = c._set
 				delete c.set
 				var cache = new Cache({
@@ -266,7 +266,7 @@ app.get('/cards/', function(req, res) {
 						message: 'Cached cards'
 					});
 				});
-				};
+			});
 			}));
 		.then(
 			res.json(cards)
