@@ -270,6 +270,7 @@ app.get('/cards/', function(req, res) {
 			}))
 		.then(
 			res.json(cards)
+		)
     });
 });
     //Cache cards
