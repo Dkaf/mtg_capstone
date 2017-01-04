@@ -7,10 +7,12 @@ var moment = require('moment');
 var User = require('./models/user_model');
 var Deck = require('./models/deck_model');
 var Cache = require('./models/cache_model');
+var Card = require('./models/card_model');
 var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var LocalStrategy = require('passport-local').Strategy
+var Authenticate = Passport.authenticate('basic', {session: false});
 var unirest = require('unirest');
 var schedule = require('node-schedule');
 const cors = require('cors')
@@ -164,10 +166,18 @@ app.post('/users', jsonParser, function(req, res) {
 });
 
 //Login
-app.post('/login', passport.authenticate('local', {
-	successRedirect: '/',
-	failureRedirect: '/login'
-}));
+app.get('/login/:user', Authenticate, function(req, res) {
+	var username = req.params.user;
+	User.find({username: username}, function (err, user)  {
+		if (err) {
+			return res.status(500).json({
+				message: 'internal server error'
+			})
+		return res.json(user)
+		}
+	})
+}
+
 
 //Find users
 app.get('/users', jsonParser, function(req, res) {
@@ -191,7 +201,7 @@ app.delete('/user/delete', function(req, res) {
 });
 
 //Get cards
-app.get('/cards/all', jsonParser, function(req, res) {
+app.get('/cards/all', function(req, res) {
     mtg.card.all()
         .on('data', function(card) {
             console.log(card.name);
@@ -199,7 +209,7 @@ app.get('/cards/all', jsonParser, function(req, res) {
 });
 
 //Get card by id
-app.get('/cards/:id', jsonParser, function(req, res) {
+app.get('/cards/:id', function(req, res) {
     unirest.get('https://api.magicthegathering.io/v1/cards/' + req.params.id).end(function(card) {
         console.log(card);
     });
@@ -207,7 +217,7 @@ app.get('/cards/:id', jsonParser, function(req, res) {
 
 
 //Get cards with filters
-app.get('/cards/', jsonParser, function(req, res) {
+app.get('/cards/', function(req, res) {
     let name = req.query.name;
     let manaCost = req.query.manaCost;
     let cmc = req.query.cmc;
@@ -277,7 +287,7 @@ app.get('/cards/', jsonParser, function(req, res) {
 
 
 //Make deck
-app.post('/user/deck', passport.authenticate('basic'), jsonParser, function(req, res) {
+app.post('/user/deck', Authenticate, function(req, res) {
     var name = req.body.name;
     name = name.trim();
 
@@ -336,7 +346,7 @@ app.get('/deck/:deckSearch' ,function(req, res) {
 
 
 //Add cards to deck
-app.put('/user/deck/:deckName', jsonParser, function(req, res) {
+app.put('/user/deck/:deckName', Authenticate, function(req, res) {
     var deckName = req.params.deckName;
     Deck.findOneAndUpdate({name: deckName, cards: req.body.cards}, function(err, deck) {
         if (err) {

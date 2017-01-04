@@ -11,7 +11,7 @@ var cardSchema = new mongoose.Schema({
 	types:{type: Array},
 	subtypes:{type: Array},
 	rarity:{type: String},
-	set:{type: String},
+	_set:{type: String},
 	text:{type: String},
 	artist:{type: String},
 	number:{type: String},
@@ -29,5 +29,7 @@ var cardSchema = new mongoose.Schema({
 })
 
 var Card = mongoose.model('Card', cardSchema);
+
+module.exports = Card;
 
 //deconstruct object for needed data
