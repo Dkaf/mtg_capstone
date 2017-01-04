@@ -269,7 +269,7 @@ app.get('/cards/', function(req, res) {
 			});
 			}))
 		.then(
-			return res.json(cards)
+			res.json(cards)
 		)
     });
 });
