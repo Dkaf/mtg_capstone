@@ -173,7 +173,9 @@ app.get('/login/:user', Authenticate, function(req, res) {
 			return res.status(500).json({
 				message: 'internal server error'
 			})
-		return res.json(user)
+		return res.status(200).json({
+			user: user
+		})
 		}
 	})
 });
@@ -245,8 +247,29 @@ app.get('/cards/', function(req, res) {
     // }
     mtg.card.where(filters)
         .then(cards => {
-            //include set filter
-    		res.json(cards)
+            Promise.all(cards = cards.map( (c) => {
+				new Promise(resolve, rej) => {
+				c.set = c._set
+				delete c.set
+				var cache = new Cache({
+					card: c,
+					date: moment()
+				});
+				cache.save(function(err) {
+					if (err) {
+						return res.status(500).json({
+							message: 'Internal server error'
+						});
+					}
+
+					return res.status(201).json({
+						message: 'Cached cards'
+					});
+				});
+				};
+			}));
+		.then(
+			res.json(cards)
     });
 });
     //Cache cards
@@ -271,17 +294,7 @@ app.get('/cards/', function(req, res) {
             date: moment()
         });
 
-        cache.save(function(err) {
-            if (err) {
-                return res.status(500).json({
-                    message: 'Internal server error'
-                });
-            }
 
-            return res.status(201).json({
-                message: 'Cached cards'
-            });
-        });
     });
 
 
