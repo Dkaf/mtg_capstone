@@ -12,7 +12,6 @@ var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 var LocalStrategy = require('passport-local').Strategy
-var Authenticate = Passport.authenticate('basic', {session: false});
 var unirest = require('unirest');
 var schedule = require('node-schedule');
 const cors = require('cors')
@@ -73,6 +72,7 @@ passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
 
+var Authenticate = passport.authenticate('basic', {session: false});
 
 
 //Adding new users
