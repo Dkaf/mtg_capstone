@@ -247,30 +247,20 @@ app.get('/cards/', function(req, res) {
     // }
     mtg.card.where(filters)
         .then(cards => {
-            Promise.all(cards = cards.map( (c) => {
-				new Promise((resolve, rej) => {
-				c.set = c._set
-				delete c.set
-				var cache = new Cache({
-					card: c,
-					date: moment()
-				});
-				cache.save(function(err) {
-					if (err) {
-						return res.status(500).json({
-							message: 'Internal server error'
-						});
-					}
-
-					return res.status(201).json({
-						message: 'Cached cards'
+            return Promise.all(cards = cards.map( (c) => {
+				return new Promise((resolve, rej) => {
+					c.set = c._set
+					delete c.set
+					let cd = new Card();
+					Object.assign(cd, c);
+					cd.save((err) => {
+						resolve(cd);
 					});
 				});
-			});
 			}))
-		.then(
+		.then( cards => {
 			res.json(cards)
-		)
+		});
     });
 });
     //Cache cards
