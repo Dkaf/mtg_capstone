@@ -166,18 +166,8 @@ app.post('/users', jsonParser, function(req, res) {
 });
 
 //Login
-app.get('/login/:user', function(req, res) {
-	var username = req.params.user;
-	User.find({username: username}, function (err, user)  {
-		if (err) {
-			return res.status(500).json({
-				message: 'internal server error'
-			})
-		return res.status(200).json({
-			user: user
-		})
-		}
-	})
+app.post('/login', Authenticate, function(req, res) {
+	res.send(200).json("Login success");
 });
 
 
