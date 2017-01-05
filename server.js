@@ -166,7 +166,7 @@ app.post('/users', jsonParser, function(req, res) {
 });
 
 //Login
-app.get('/login/:user', Authenticate, function(req, res) {
+app.get('/login/:user', function(req, res) {
 	var username = req.params.user;
 	User.find({username: username}, function (err, user)  {
 		if (err) {
