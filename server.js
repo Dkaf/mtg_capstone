@@ -167,7 +167,7 @@ app.post('/users', jsonParser, function(req, res) {
 
 //Login
 app.post('/login', Authenticate, function(req, res) {
-	res.send(200).json("Login success");
+	res.send(200)({message: "Login Success"});
 });
 
 
