@@ -313,7 +313,9 @@ app.post('/user/deck', Authenticate, function(req, res) {
 //Get Decks for deckList
 app.get('/decks/:user', function(req, res) {
 	var user = req.params.user;
-	Deck.find({user: user}, function(err, decks) {
+	Deck.find({user: user})
+	.populate('cards')
+	.exec( function(err, decks) {
 		if (err) {
 			return res.status(500).json({
 				message: 'Internal server error'
