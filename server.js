@@ -351,7 +351,7 @@ app.put('/user/deck/:deckName', Authenticate, function(req, res) {
             });
         }
 
-		Deck.populate(deck, {patch:'cards', model:'Card'}, function(err, deck) {
+		Card.populate(deck, {patch:'cards', model:'Card'}, function(err, deck) {
 			return res.status(200).json({
 				deck: deck
 			})
