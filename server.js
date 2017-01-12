@@ -345,7 +345,7 @@ app.get('/deck/:deckSearch' ,function(req, res) {
 app.put('/user/deck/:deckName', Authenticate, function(req, res) {
     var deckName = req.params.deckName;
     Deck.findOneAndUpdate({name: deckName}, {cards: req.body.cards}),
-	populate('cards')
+	.populate('cards')
 	.exec(function(err, deck) {
         if (err) {
             return res.status(500).json({
