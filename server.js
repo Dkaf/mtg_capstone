@@ -344,17 +344,19 @@ app.get('/deck/:deckSearch' ,function(req, res) {
 //Add cards to deck
 app.put('/user/deck/:deckName', Authenticate, function(req, res) {
     var deckName = req.params.deckName;
-    Deck.findOneAndUpdate({name: deckName}, {cards: req.body.cards}),
-	.populate('cards')
-	.exec(function(err, deck) {
+    Deck.findOneAndUpdate({name: deckName}, {cards: req.body.cards},function(err, deck) {
         if (err) {
             return res.status(500).json({
                 message: 'Internal server error'
             });
         }
-		return res.status(200).json({
-			deck: deck
+
+		Deck.populate(deck, {patch:'cards', model:'Card'}, function(err, deck) {
+			return res.status(200).json({
+				deck: deck
+			})
 		})
+
     });
 });
 
