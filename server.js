@@ -21,12 +21,12 @@ const mtg = require('mtgsdk');
 
 var app = express();
 app.options('*', cors({
-	origin: "http://localhost:8080",
+	origin: "https://dkaf.github.io/mtg_react_capstone/",
 	methods:['POST','GET','PUT','DELETE'],
 	preflightContinue: true
 }));
 app.use(cors({
-	origin: "http://localhost:8080",
+	origin: "https://dkaf.github.io/mtg_react_capstone/",
 	methods:['POST','GET','PUT','DELETE'],
 	preflightContinue: true
 }));
@@ -363,11 +363,7 @@ app.put('/user/deck/:deckName', Authenticate, function(req, res) {
 //Delete deck
 app.delete('/user/deck/:deckName', function(req, res) {
     var deckName = req.params.deckName;
-    // if (!(deckName in Deck)) {
-    //     return res.status(404).json({
-    //         message: 'Deck not found'
-    //     });
-    // }
+
     Deck.findOneAndRemove({name: deckName}, function(err, deck) {
         if (err) {
             return res.status(500).json({
@@ -384,9 +380,4 @@ app.delete('/user/deck/:deckName', function(req, res) {
 mongoose.connect(process.env.MONGODB_URI).then(function() {
     app.use(express.static('public'));
     app.listen(process.env.PORT || 8080);
-
-    // var j = schedule.scheduleJob('* 1 * * *', function(){
-    //     var current = moment();
-	//
-    // });
 });
