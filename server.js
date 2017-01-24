@@ -21,12 +21,12 @@ const mtg = require('mtgsdk');
 
 var app = express();
 app.options('*', cors({
-	origin: "https://dkaf.github.io/mtg_react_capstone/",
+	origin: "https://dkaf.github.io",
 	methods:['POST','GET','PUT','DELETE'],
 	preflightContinue: true
 }));
 app.use(cors({
-	origin: "https://dkaf.github.io/mtg_react_capstone/",
+	origin: "https://dkaf.github.io",
 	methods:['POST','GET','PUT','DELETE'],
 	preflightContinue: true
 }));
