@@ -64,5 +64,5 @@ DELETE: '/user/deck/:deckname'
 </ul>
 
 ## React Front End
-Github repo: https://github.com/Dkaf/mtg_react_capstone
+Github repo: https://github.com/Dkaf/mtg_react_capstone<br>
 website: https://dkaf.github.io/mtg_react_capstone/
