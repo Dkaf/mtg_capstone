@@ -1,4 +1,5 @@
 import db from './../models';
+import moment from 'moment';
 
 const cardController = {};
 
@@ -88,3 +89,4 @@ cardController.filteredCards = (req, res) => {
 
     };
 
+export default cardController;
