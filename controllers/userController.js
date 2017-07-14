@@ -94,7 +94,7 @@ userController.newUser = (req, res) => {
     });
 }
 
-// Login /login authenticate
+// Login
 userController.login = (req, res) => {
 	res.status(200).send({message: "Login Success"});
 };
